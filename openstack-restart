@@ -19,7 +19,10 @@ os_run 2 "./bin/nova-compute --flagfile=$FLAGFILE"
 os_run 3 "./bin/nova-network --flagfile=$FLAGFILE"
 os_run 4 "./bin/nova-scheduler --flagfile=$FLAGFILE"
 
-os_run 5 "./bin/glance-api && ./bin/glance-registry"
+tmux_clear 5
+tmux send-keys -t Openstack:5 "ps aux | grep glance | awk '{print \$2}' | xargs kill -9 | sleep 5" C-m
+#tmux send-keys -t Openstack:5 "./bin/glance-api & ./bin/glance-registry &" C-m
+os_run 5 "./bin/glance-api & ./bin/glance-registry &"
 os_run 6 "./bin/keystone -v -d"
 os_run 7 "./bin/quantum etc/quantum.conf"
 
