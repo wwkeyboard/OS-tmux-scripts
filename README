@@ -1,0 +1,1 @@
+This is very basic, but I'm sure these scripts will grow. Right now the open script just starts a tmux session with 7 windows for nova, glance, keystone, and quantum. The restart script will try to kill whatever is running in those windows (C-c), clear the buffer, and start the associated service. 
