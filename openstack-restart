@@ -24,5 +24,5 @@ tmux send-keys -t Openstack:5 "ps aux | grep glance | awk '{print \$2}' | xargs 
 #tmux send-keys -t Openstack:5 "./bin/glance-api & ./bin/glance-registry &" C-m
 os_run 5 "./bin/glance-api & ./bin/glance-registry &"
 os_run 6 "./bin/keystone -v -d"
-os_run 7 "./bin/quantum etc/quantum.conf"
+os_run 7 "./bin/quantum-server etc/quantum.conf"
 
