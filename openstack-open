@@ -1,0 +1,25 @@
+#!/bin/sh
+
+OS_DIR=~/work/nova/github
+NOVA_DIR=$OS_DIR/nova
+GLANCE_DIR=$OS_DIR/glance
+KEYSTONE_DIR=$OS_DIR/keystone
+QUANTUM_DIR=$OS_DIR/quantum
+MELANGE_DIR=$OS_DIR/melange
+
+os_open() {
+  tmux new-window -t Openstack:$1 -n $2
+  tmux send-keys -t Openstack:$1 "cd $3" C-m
+}
+
+tmux new-session -d -s Openstack
+os_open 1 api $NOVA_DIR
+os_open 2 compute $NOVA_DIR
+os_open 3 network $NOVA_DIR
+os_open 4 scheduler $NOVA_DIR
+os_open 5 glance $GLANCE_DIR
+os_open 6 keystone $KEYSTONE_DIR
+os_open 7 quantum $QUANTUM_DIR
+os_open 8 melange $MELANGE_DIR
+
+tmux attach -t Openstack

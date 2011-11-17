@@ -1,0 +1,25 @@
+#!/bin/sh
+
+OS_DIR=~/work/nova/github/
+NOVA_DIR=$OS_DIR/nova
+FLAGFILE=~/work/nova/nova.conf
+
+tmux_clear() {
+  tmux send-keys -t Openstack:$1 C-c 'clear' C-m
+  tmux clear-history -t Openstack:$1
+}
+
+os_run(){
+  tmux_clear $1
+  tmux send-keys -t Openstack:$1 "$2" C-m
+}
+
+os_run 1 "./bin/nova-api --flagfile=$FLAGFILE"
+os_run 2 "./bin/nova-compute --flagfile=$FLAGFILE"
+os_run 3 "./bin/nova-network --flagfile=$FLAGFILE"
+os_run 4 "./bin/nova-scheduler --flagfile=$FLAGFILE"
+
+os_run 5 "./bin/glance-api && ./bin/glance-registry"
+os_run 6 "./bin/keystone -v -d"
+os_run 7 "./bin/quantum etc/quantum.conf"
+
